@@ -288,13 +288,13 @@ struct TermsOfServiceView: View {
             }
             .navigationTitle("利用規約")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("閉じる") {
                         dismiss()
                     }
                 }
-            }
+            })
         }
     }
 }

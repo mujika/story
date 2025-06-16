@@ -56,11 +56,11 @@ struct AudioRecordListView: View {
                 .listStyle(PlainListStyle())
                 .background(Color(UIColor.systemGroupedBackground))
                 .navigationTitle("録音履歴 (\(audioRecords.count)件)")
-                .toolbar {
+                .toolbar(content: {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         EditButton()
                     }
-                }
+                })
             }
         }
         .sheet(item: $selectedRecord) { record in
@@ -268,13 +268,13 @@ struct AudioRecordDetailView: View {
             }
             .navigationTitle("録音詳細")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("閉じる") {
                         dismiss()
                     }
                 }
-            }
+            })
         }
         .sheet(isPresented: $showingTrimView) {
             AudioTrimView(audioRecord: record, audioRecorder: audioRecorder)
