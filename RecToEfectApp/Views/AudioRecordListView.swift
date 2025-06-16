@@ -7,6 +7,7 @@ struct AudioRecordListView: View {
     
     @Environment(\.modelContext) private var modelContext
     @State private var selectedRecord: AudioRecord?
+    @StateObject private var audioPlayer = AudioRecorderViewModel()
     
     var body: some View {
         NavigationView {
@@ -32,9 +33,21 @@ struct AudioRecordListView: View {
             } else {
                 List {
                     ForEach(audioRecords) { record in
-                        AudioRecordRow(record: record) {
-                            selectedRecord = record
-                        }
+                        AudioRecordRow(
+                            record: record,
+                            isPlaying: audioPlayer.isPlaying && audioPlayer.filePath == record.audioPath,
+                            onTap: {
+                                selectedRecord = record
+                            },
+                            onPlayTap: {
+                                if audioPlayer.isPlaying && audioPlayer.filePath == record.audioPath {
+                                    audioPlayer.stopPlayback()
+                                } else {
+                                    audioPlayer.playAudioFile(path: record.audioPath)
+                                    audioPlayer.filePath = record.audioPath
+                                }
+                            }
+                        )
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
                     }
@@ -73,60 +86,77 @@ struct AudioRecordListView: View {
 
 struct AudioRecordRow: View {
     let record: AudioRecord
+    let isPlaying: Bool
     let onTap: () -> Void
+    let onPlayTap: () -> Void
     
     var body: some View {
         HStack(spacing: 12) {
             // Icon area
             ZStack {
                 Circle()
-                    .fill(Color.blue.opacity(0.1))
+                    .fill(isPlaying ? Color.green.opacity(0.2) : Color.blue.opacity(0.1))
                     .frame(width: 50, height: 50)
                 
-                Image(systemName: "waveform")
+                Image(systemName: isPlaying ? "waveform" : "waveform")
                     .font(.title3)
-                    .foregroundColor(.blue)
+                    .foregroundColor(isPlaying ? .green : .blue)
+                    .scaleEffect(isPlaying ? 1.1 : 1.0)
+                    .animation(.easeInOut(duration: 0.3), value: isPlaying)
             }
             
-            // Content area
-            VStack(alignment: .leading, spacing: 6) {
-                // Title
-                Text(record.audioTitle.isEmpty ? "無題の録音" : record.audioTitle)
-                    .font(.headline)
-                    .lineLimit(1)
-                    .foregroundColor(.primary)
-                
-                // Date and duration in a single line
-                HStack(spacing: 8) {
-                    Label(record.createDate.formatted(.dateTime.day().month().hour().minute()), 
-                          systemImage: "clock")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+            // Content area - tappable to open details
+            Button(action: onTap) {
+                VStack(alignment: .leading, spacing: 6) {
+                    // Title
+                    Text(record.audioTitle.isEmpty ? "無題の録音" : record.audioTitle)
+                        .font(.headline)
+                        .lineLimit(1)
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    if record.duration > 0 {
-                        Divider()
-                            .frame(height: 12)
-                        
-                        Label(formatDuration(record.duration), 
-                              systemImage: "timer")
+                    // Date and duration in a single line
+                    HStack(spacing: 8) {
+                        Label(record.createDate.formatted(.dateTime.day().month().hour().minute()), 
+                              systemImage: "clock")
                             .font(.caption)
                             .foregroundColor(.secondary)
+                        
+                        if record.duration > 0 {
+                            Divider()
+                                .frame(height: 12)
+                            
+                            Label(formatDuration(record.duration), 
+                                  systemImage: "timer")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        if isPlaying {
+                            HStack(spacing: 4) {
+                                Image(systemName: "speaker.wave.2")
+                                    .font(.caption)
+                                    .foregroundColor(.green)
+                                Text("再生中")
+                                    .font(.caption)
+                                    .foregroundColor(.green)
+                            }
+                        }
                     }
-                    
-                    Spacer()
                 }
             }
+            .buttonStyle(PlainButtonStyle())
             
-            Spacer()
-            
-            // Play button
-            Button(action: onTap) {
+            // Play/Stop button
+            Button(action: onPlayTap) {
                 ZStack {
                     Circle()
-                        .fill(Color.blue)
+                        .fill(isPlaying ? Color.red : Color.blue)
                         .frame(width: 44, height: 44)
                     
-                    Image(systemName: "play.fill")
+                    Image(systemName: isPlaying ? "stop.fill" : "play.fill")
                         .font(.title3)
                         .foregroundColor(.white)
                 }
@@ -138,6 +168,10 @@ struct AudioRecordRow: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(UIColor.systemBackground))
                 .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(isPlaying ? Color.green.opacity(0.3) : Color.clear, lineWidth: 2)
+                )
         )
         .padding(.horizontal, 4)
     }
@@ -216,15 +250,15 @@ struct AudioRecordDetailView: View {
                         playAudio()
                     }) {
                         HStack {
-                            Image(systemName: "play.circle")
+                            Image(systemName: audioRecorder.isPlaying && audioRecorder.filePath == record.audioPath ? "stop.circle" : "play.circle")
                                 .font(.title3)
-                            Text("再生")
+                            Text(audioRecorder.isPlaying && audioRecorder.filePath == record.audioPath ? "停止" : "再生")
                                 .font(.headline)
                         }
-                        .foregroundColor(.green)
+                        .foregroundColor(audioRecorder.isPlaying && audioRecorder.filePath == record.audioPath ? .red : .green)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.green.opacity(0.1))
+                        .background((audioRecorder.isPlaying && audioRecorder.filePath == record.audioPath ? Color.red : Color.green).opacity(0.1))
                         .cornerRadius(12)
                     }
                 }
@@ -264,8 +298,12 @@ struct AudioRecordDetailView: View {
     }
     
     private func playAudio() {
-        // TODO: Implement audio playback
-        print("Playing audio: \(record.audioTitle)")
+        if audioRecorder.isPlaying && audioRecorder.filePath == record.audioPath {
+            audioRecorder.stopPlayback()
+        } else {
+            audioRecorder.playAudioFile(path: record.audioPath)
+            audioRecorder.filePath = record.audioPath
+        }
     }
     
     private func formatDuration(_ duration: TimeInterval) -> String {

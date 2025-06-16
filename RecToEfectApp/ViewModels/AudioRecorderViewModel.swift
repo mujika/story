@@ -27,7 +27,7 @@ class AudioRecorderViewModel: ObservableObject {
     private let sampleRate = 44100.0
     private let bufferDuration: TimeInterval = 0.004
     private var offset: Double = 0.0
-    private var filePath: String?
+    var filePath: String?
     private var waveFormPath: String?
     
     // MARK: - Effect Properties
@@ -200,12 +200,24 @@ class AudioRecorderViewModel: ObservableObject {
     // MARK: - Playback Methods
     func startPlayback() {
         guard !isPlaying, let path = filePath else { return }
+        playAudioFile(path: path)
+    }
+    
+    func playAudioFile(path: String) {
+        guard !isPlaying else { return }
         
         do {
             let audioURL = URL(fileURLWithPath: path)
             audioFile = try AVAudioFile(forReading: audioURL)
             duration = Double(audioFile.length) / audioFile.fileFormat.sampleRate
             
+            // リアルタイムエフェクトエンジンが動いている場合は停止
+            let wasEngineRunning = audioEngine.isRunning
+            if wasEngineRunning {
+                audioEngine.stop()
+            }
+            
+            // 新しいプレイヤーノードを作成
             audioFilePlayer = AVAudioPlayerNode()
             audioEngine.attach(audioFilePlayer)
             audioEngine.connect(audioFilePlayer, to: audioEngine.outputNode, format: audioFile.processingFormat)
@@ -221,7 +233,9 @@ class AudioRecorderViewModel: ObservableObject {
             
             DispatchQueue.main.async {
                 self.isPlaying = true
+                self.currentTime = 0.0
                 self.startPlaybackTimer()
+                self.descript = "再生中..."
             }
             
         } catch {
@@ -239,6 +253,7 @@ class AudioRecorderViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.isPlaying = false
             self.currentTime = 0.0
+            self.descript = "再生停止"
         }
     }
     
