@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct WaveformView: View {
+    let waveformData: [Float]
+    let isRecording: Bool
+    let isPlaying: Bool
     @State private var animationPhase: Double = 0
     let numberOfBars: Int = 50
     
@@ -8,28 +11,63 @@ struct WaveformView: View {
         HStack(alignment: .center, spacing: 1) {
             ForEach(0..<numberOfBars, id: \.self) { index in
                 RoundedRectangle(cornerRadius: 1)
-                    .fill(Color.white.opacity(0.7))
+                    .fill(barColor(for: index))
                     .frame(width: 3, height: heightForBar(at: index))
                     .animation(
-                        .easeInOut(duration: 0.5)
-                        .delay(Double(index) * 0.02),
-                        value: animationPhase
+                        .easeInOut(duration: 0.3),
+                        value: heightForBar(at: index)
                     )
             }
         }
         .onAppear {
-            startAnimation()
+            if isRecording || isPlaying {
+                startAnimation()
+            }
+        }
+        .onChange(of: isRecording) { _, newValue in
+            if newValue {
+                startAnimation()
+            }
+        }
+        .onChange(of: isPlaying) { _, newValue in
+            if newValue {
+                startAnimation()
+            }
         }
     }
     
     private func heightForBar(at index: Int) -> CGFloat {
-        let progress = Double(index) / Double(numberOfBars)
-        let waveOffset = sin((progress * 4 * .pi) + animationPhase) * 30
-        return max(4, 20 + waveOffset)
+        if waveformData.isEmpty {
+            // フォールバック: アニメーション波形
+            let progress = Double(index) / Double(numberOfBars)
+            let waveOffset = sin((progress * 4 * .pi) + animationPhase) * 15
+            return max(4, 15 + waveOffset)
+        } else {
+            // 実際の音声データに基づく波形
+            let dataIndex = min(index, waveformData.count - 1)
+            let amplitude = waveformData[dataIndex]
+            let baseHeight: CGFloat = 4
+            let maxHeight: CGFloat = 60
+            return baseHeight + CGFloat(amplitude) * maxHeight
+        }
+    }
+    
+    private func barColor(for index: Int) -> Color {
+        if isRecording {
+            return Color.red.opacity(0.8)
+        } else if isPlaying {
+            return Color.blue.opacity(0.8)
+        } else {
+            return Color.white.opacity(0.7)
+        }
     }
     
     private func startAnimation() {
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+            if !isRecording && !isPlaying {
+                timer.invalidate()
+                return
+            }
             withAnimation {
                 animationPhase += 0.2
             }
@@ -38,8 +76,12 @@ struct WaveformView: View {
 }
 
 #Preview {
-    WaveformView()
-        .frame(height: 100)
-        .padding()
-        .background(Color.black)
+    WaveformView(
+        waveformData: [],
+        isRecording: false,
+        isPlaying: false
+    )
+    .frame(height: 100)
+    .padding()
+    .background(Color.black)
 }

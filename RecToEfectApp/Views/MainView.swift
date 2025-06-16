@@ -25,10 +25,14 @@ struct MainView: View {
                 EffectControlView(audioRecorder: audioRecorder)
                     .padding(.horizontal)
                 
-                // Waveform View (placeholder for now)
-                WaveformView()
-                    .frame(height: 100)
-                    .padding(.horizontal)
+                // Waveform View
+                WaveformView(
+                    waveformData: audioRecorder.isRecording ? audioRecorder.waveformData : audioRecorder.playbackWaveformData,
+                    isRecording: audioRecorder.isRecording,
+                    isPlaying: audioRecorder.isPlaying
+                )
+                .frame(height: 100)
+                .padding(.horizontal)
                 
                 // Control Buttons
                 HStack(spacing: 40) {

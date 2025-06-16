@@ -36,6 +36,11 @@ class AudioRecorderViewModel: ObservableObject {
     @Published var reverbWetness: Float = 0.5
     @Published var delayTime: TimeInterval = 0.3
     
+    // MARK: - Waveform Properties
+    @Published var waveformData: [Float] = []
+    @Published var playbackWaveformData: [Float] = []
+    private let waveformSampleCount = 50
+    
     
     // MARK: - SwiftData Properties
     private let dataManager = DataManager.shared
@@ -126,6 +131,7 @@ class AudioRecorderViewModel: ObservableObject {
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: inputFormat) { [weak self] buffer, time in
             DispatchQueue.main.async {
                 self?.updateVolumeLevel(from: buffer)
+                self?.updateWaveformData(from: buffer)
             }
         }
     }
@@ -163,6 +169,8 @@ class AudioRecorderViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.isRecording = true
                 self.descript = "録音中..."
+                // 波形データをリセット
+                self.waveformData = Array(repeating: 0.0, count: self.waveformSampleCount)
             }
             
         } catch {
@@ -184,6 +192,8 @@ class AudioRecorderViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.isRecording = false
             self.descript = "録音完了"
+            // 録音データを再生用にコピー
+            self.playbackWaveformData = self.waveformData
         }
     }
     
@@ -245,6 +255,32 @@ class AudioRecorderViewModel: ObservableObject {
         
         let averageAmplitude = sum / Float(frames)
         volumeLevel = averageAmplitude
+    }
+    
+    private func updateWaveformData(from buffer: AVAudioPCMBuffer) {
+        guard let channelData = buffer.floatChannelData?[0] else { return }
+        
+        let frames = buffer.frameLength
+        let samplesPerSegment = Int(frames) / waveformSampleCount
+        var newWaveformData: [Float] = []
+        
+        for i in 0..<waveformSampleCount {
+            let startIndex = i * samplesPerSegment
+            let endIndex = min(startIndex + samplesPerSegment, Int(frames))
+            
+            var segmentSum: Float = 0.0
+            for j in startIndex..<endIndex {
+                segmentSum += abs(channelData[j])
+            }
+            
+            let segmentAverage = segmentSum / Float(endIndex - startIndex)
+            newWaveformData.append(segmentAverage)
+        }
+        
+        // 録音中は最新データを蓄積
+        if isRecording {
+            waveformData = newWaveformData
+        }
     }
     
     private func startPlaybackTimer() {
