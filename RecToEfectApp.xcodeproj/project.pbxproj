@@ -3,95 +3,50 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5738AFBE234C827F00D7143D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AFBD234C827F00D7143D /* FirstViewController.swift */; };
-		5759BC89233F50C80075BAB9 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5759BC88233F50C80075BAB9 /* TutorialViewController.swift */; };
-		57ECDA1A234C7F8500B74682 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ECDA19234C7F8500B74682 /* SecondViewController.swift */; };
-		57ECDA1C234C7FAB00B74682 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ECDA1B234C7FAB00B74682 /* ThirdViewController.swift */; };
-		8964786D247D3E9B007B3447 /* WaveformSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8964786C247D3E9B007B3447 /* WaveformSave.swift */; };
-		89784C98268DB02000B61577 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 89784C97268DB02000B61577 /* Realm */; };
-		89784C9A268DB02000B61577 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89784C99268DB02000B61577 /* RealmSwift */; };
-		E130BD73220DA87E00CF1B96 /* CropScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E130BD72220DA87E00CF1B96 /* CropScrollView.swift */; };
-		E130BD75220DB44B00CF1B96 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E130BD74220DB44B00CF1B96 /* UIViewController+Extension.swift */; };
-		E130BD77220DB89600CF1B96 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E130BD76220DB89600CF1B96 /* NSObject+Extension.swift */; };
-		E130BD79220DB95D00CF1B96 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E130BD78220DB95C00CF1B96 /* UIColor+Extension.swift */; };
-		E130BD7B220DB98D00CF1B96 /* ExtentionCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E130BD7A220DB98C00CF1B96 /* ExtentionCompatible.swift */; };
-		E130BD7F220DC05000CF1B96 /* TrimImageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E130BD7E220DC05000CF1B96 /* TrimImageVC.storyboard */; };
-		E130BD81220DC36A00CF1B96 /* CropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E130BD80220DC36A00CF1B96 /* CropOverlayView.swift */; };
-		E130BD83220DC59F00CF1B96 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E130BD82220DC59F00CF1B96 /* CoreImage.framework */; };
-		E147513F2225942B00C068A9 /* DisplayFitSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E147513E2225942B00C068A9 /* DisplayFitSize.swift */; };
-		E14AF18122959DE00077F57A /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14AF18022959DE00077F57A /* BackgroundImageView.swift */; };
-		E14AF1832296C9E40077F57A /* CustouTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14AF1822296C9E40077F57A /* CustouTableView.swift */; };
-		E14FA201228D79E9005778D1 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14FA200228D79E9005778D1 /* SettingViewController.swift */; };
-		E174068A221487170014FD33 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1740689221487170014FD33 /* CoreMotion.framework */; };
-		E177BEF82209BB2800E2DE63 /* TrimImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177BEF72209BB2800E2DE63 /* TrimImageVC.swift */; };
-		E17C7E1620F4D7AF00119222 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17C7E1520F4D7AF00119222 /* AudioToolbox.framework */; };
-		E194CA6E20C2FADC0043E5E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E194CA6D20C2FADC0043E5E3 /* AppDelegate.swift */; };
-		E194CA7020C2FADC0043E5E3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E194CA6F20C2FADC0043E5E3 /* MainViewController.swift */; };
-		E194CA7320C2FADC0043E5E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E194CA7120C2FADC0043E5E3 /* Main.storyboard */; };
+		AA001001000000000000001 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002001000000000000001 /* MainView.swift */; };
+		AA001002000000000000002 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002002000000000000002 /* TutorialView.swift */; };
+		AA001003000000000000003 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002003000000000000003 /* SettingView.swift */; };
+		AA001004000000000000004 /* TrimImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002004000000000000004 /* TrimImageView.swift */; };
+		AA001005000000000000005 /* AudioRecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002005000000000000005 /* AudioRecordListView.swift */; };
+		AA001006000000000000006 /* RecordButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002006000000000000006 /* RecordButtonView.swift */; };
+		AA001007000000000000007 /* PlayButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002007000000000000007 /* PlayButtonView.swift */; };
+		AA001008000000000000008 /* VolumeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002008000000000000008 /* VolumeIndicator.swift */; };
+		AA001009000000000000009 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002009000000000000009 /* WaveformView.swift */; };
+		AA001010000000000000010 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002010000000000000010 /* BackgroundImageView.swift */; };
+		AA001011000000000000011 /* AudioRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002011000000000000011 /* AudioRecorderViewModel.swift */; };
+		AA001012000000000000012 /* AudioRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002012000000000000012 /* AudioRecord.swift */; };
+		AA001013000000000000013 /* WaveformRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002013000000000000013 /* WaveformRecord.swift */; };
+		AA001014000000000000014 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002014000000000000014 /* DataManager.swift */; };
+		AA001016000000000000016 /* RecToEfectAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002016000000000000016 /* RecToEfectAppApp.swift */; };
 		E194CA7520C2FADF0043E5E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E194CA7420C2FADF0043E5E3 /* Assets.xcassets */; };
 		E194CA7820C2FADF0043E5E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E194CA7620C2FADF0043E5E3 /* LaunchScreen.storyboard */; };
-		E1CD454F20C2FD92004CA01F /* AudioSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD454E20C2FD92004CA01F /* AudioSave.swift */; };
-		E1CD455120C2FD9A004CA01F /* DrawWaveform.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD455020C2FD9A004CA01F /* DrawWaveform.swift */; };
-		E1CD455320C2FDA4004CA01F /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD455220C2FDA4004CA01F /* PlayButton.swift */; };
-		E1CD455520C2FDAE004CA01F /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD455420C2FDAE004CA01F /* RecordButton.swift */; };
-		E1CD455720C2FDB7004CA01F /* KurukuruUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD455620C2FDB7004CA01F /* KurukuruUI.swift */; };
-		E1CED4BC221053AF00A12687 /* ImageSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CED4BB221053AF00A12687 /* ImageSave.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		89E002BD268D998A00C4D96A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		5738AFBD234C827F00D7143D /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		5759BC88233F50C80075BAB9 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
-		57ECDA19234C7F8500B74682 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
-		57ECDA1B234C7FAB00B74682 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
-		8964786C247D3E9B007B3447 /* WaveformSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WaveformSave.swift; path = RecToEfectApp/WaveformSave.swift; sourceTree = SOURCE_ROOT; };
-		E130BD72220DA87E00CF1B96 /* CropScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropScrollView.swift; sourceTree = "<group>"; };
-		E130BD74220DB44B00CF1B96 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		E130BD76220DB89600CF1B96 /* NSObject+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
-		E130BD78220DB95C00CF1B96 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		E130BD7A220DB98C00CF1B96 /* ExtentionCompatible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtentionCompatible.swift; sourceTree = "<group>"; };
-		E130BD7E220DC05000CF1B96 /* TrimImageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TrimImageVC.storyboard; sourceTree = "<group>"; };
-		E130BD80220DC36A00CF1B96 /* CropOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropOverlayView.swift; sourceTree = "<group>"; };
-		E130BD82220DC59F00CF1B96 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		E147513E2225942B00C068A9 /* DisplayFitSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayFitSize.swift; sourceTree = "<group>"; };
-		E14751402227ED0B00C068A9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
-		E14751412227ED0B00C068A9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		E14AF18022959DE00077F57A /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
-		E14AF1822296C9E40077F57A /* CustouTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustouTableView.swift; sourceTree = "<group>"; };
-		E14FA200228D79E9005778D1 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		E1740689221487170014FD33 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		E177BEF72209BB2800E2DE63 /* TrimImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimImageVC.swift; sourceTree = "<group>"; };
-		E17C7E1520F4D7AF00119222 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		E17C7E1720F4D7AF00119222 /* RecToEfectApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RecToEfectApp.entitlements; sourceTree = "<group>"; };
+		AA002001000000000000001 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		AA002002000000000000002 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		AA002003000000000000003 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		AA002004000000000000004 /* TrimImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimImageView.swift; sourceTree = "<group>"; };
+		AA002005000000000000005 /* AudioRecordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordListView.swift; sourceTree = "<group>"; };
+		AA002006000000000000006 /* RecordButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButtonView.swift; sourceTree = "<group>"; };
+		AA002007000000000000007 /* PlayButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButtonView.swift; sourceTree = "<group>"; };
+		AA002008000000000000008 /* VolumeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeIndicator.swift; sourceTree = "<group>"; };
+		AA002009000000000000009 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		AA002010000000000000010 /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
+		AA002011000000000000011 /* AudioRecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderViewModel.swift; sourceTree = "<group>"; };
+		AA002012000000000000012 /* AudioRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecord.swift; sourceTree = "<group>"; };
+		AA002013000000000000013 /* WaveformRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformRecord.swift; sourceTree = "<group>"; };
+		AA002014000000000000014 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		AA002016000000000000016 /* RecToEfectAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecToEfectAppApp.swift; sourceTree = "<group>"; };
+		AA002018000000000000018 /* RecToEfectApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RecToEfectApp.entitlements; sourceTree = "<group>"; };
 		E194CA6A20C2FADC0043E5E3 /* RecToEfectApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecToEfectApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E194CA6D20C2FADC0043E5E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E194CA6F20C2FADC0043E5E3 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		E194CA7220C2FADC0043E5E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E194CA7420C2FADF0043E5E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E194CA7720C2FADF0043E5E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E194CA7920C2FAE00043E5E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E1CD454E20C2FD92004CA01F /* AudioSave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSave.swift; sourceTree = "<group>"; };
-		E1CD455020C2FD9A004CA01F /* DrawWaveform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawWaveform.swift; sourceTree = "<group>"; };
-		E1CD455220C2FDA4004CA01F /* PlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
-		E1CD455420C2FDAE004CA01F /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
-		E1CD455620C2FDB7004CA01F /* KurukuruUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KurukuruUI.swift; sourceTree = "<group>"; };
-		E1CED4BB221053AF00A12687 /* ImageSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSave.swift; sourceTree = "<group>"; };
+		E194CA7920C2FADF0043E5E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,71 +54,60 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E174068A221487170014FD33 /* CoreMotion.framework in Frameworks */,
-				E130BD83220DC59F00CF1B96 /* CoreImage.framework in Frameworks */,
-				89784C98268DB02000B61577 /* Realm in Frameworks */,
-				89784C9A268DB02000B61577 /* RealmSwift in Frameworks */,
-				E17C7E1620F4D7AF00119222 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		57ECDA18234C7F5000B74682 /* TutorialViewController */ = {
+		AA003001000000000000001 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5738AFBD234C827F00D7143D /* FirstViewController.swift */,
-				57ECDA19234C7F8500B74682 /* SecondViewController.swift */,
-				57ECDA1B234C7FAB00B74682 /* ThirdViewController.swift */,
+				AA002001000000000000001 /* MainView.swift */,
+				AA002002000000000000002 /* TutorialView.swift */,
+				AA002003000000000000003 /* SettingView.swift */,
+				AA002004000000000000004 /* TrimImageView.swift */,
+				AA002005000000000000005 /* AudioRecordListView.swift */,
+				AA003006000000000000006 /* Components */,
 			);
-			path = TutorialViewController;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		E12F041F220EA0DF00FE88FB /* Triming */ = {
+		AA003002000000000000002 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E130BD80220DC36A00CF1B96 /* CropOverlayView.swift */,
-				E130BD7A220DB98C00CF1B96 /* ExtentionCompatible.swift */,
-				E130BD72220DA87E00CF1B96 /* CropScrollView.swift */,
-				E130BD76220DB89600CF1B96 /* NSObject+Extension.swift */,
-				E130BD78220DB95C00CF1B96 /* UIColor+Extension.swift */,
-				E130BD74220DB44B00CF1B96 /* UIViewController+Extension.swift */,
+				AA002011000000000000011 /* AudioRecorderViewModel.swift */,
 			);
-			path = Triming;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		E12F0420220EA13200FE88FB /* Parts */ = {
+		AA003003000000000000003 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E14AF1822296C9E40077F57A /* CustouTableView.swift */,
-				E14AF18022959DE00077F57A /* BackgroundImageView.swift */,
-				E1CD455020C2FD9A004CA01F /* DrawWaveform.swift */,
-				E1CD455220C2FDA4004CA01F /* PlayButton.swift */,
-				E1CD455620C2FDB7004CA01F /* KurukuruUI.swift */,
-				E1CD455420C2FDAE004CA01F /* RecordButton.swift */,
+				AA002012000000000000012 /* AudioRecord.swift */,
+				AA002013000000000000013 /* WaveformRecord.swift */,
 			);
-			path = Parts;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		E12F0421220EA16600FE88FB /* DataSave */ = {
+		AA003004000000000000004 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				8964786C247D3E9B007B3447 /* WaveformSave.swift */,
-				E1CD454E20C2FD92004CA01F /* AudioSave.swift */,
-				E1CED4BB221053AF00A12687 /* ImageSave.swift */,
+				AA002014000000000000014 /* DataManager.swift */,
 			);
-			path = DataSave;
+			path = Managers;
 			sourceTree = "<group>";
 		};
-		E17C7E1420F4D7AF00119222 /* Frameworks */ = {
+		AA003006000000000000006 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				E1740689221487170014FD33 /* CoreMotion.framework */,
-				E130BD82220DC59F00CF1B96 /* CoreImage.framework */,
-				E17C7E1520F4D7AF00119222 /* AudioToolbox.framework */,
+				AA002006000000000000006 /* RecordButtonView.swift */,
+				AA002007000000000000007 /* PlayButtonView.swift */,
+				AA002008000000000000008 /* VolumeIndicator.swift */,
+				AA002009000000000000009 /* WaveformView.swift */,
+				AA002010000000000000010 /* BackgroundImageView.swift */,
 			);
-			name = Frameworks;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		E194CA6120C2FADC0043E5E3 = {
@@ -171,7 +115,6 @@
 			children = (
 				E194CA6C20C2FADC0043E5E3 /* RecToEfectApp */,
 				E194CA6B20C2FADC0043E5E3 /* Products */,
-				E17C7E1420F4D7AF00119222 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -186,22 +129,15 @@
 		E194CA6C20C2FADC0043E5E3 /* RecToEfectApp */ = {
 			isa = PBXGroup;
 			children = (
-				E17C7E1720F4D7AF00119222 /* RecToEfectApp.entitlements */,
-				E130BD7E220DC05000CF1B96 /* TrimImageVC.storyboard */,
-				E194CA7120C2FADC0043E5E3 /* Main.storyboard */,
-				E194CA6D20C2FADC0043E5E3 /* AppDelegate.swift */,
-				E194CA6F20C2FADC0043E5E3 /* MainViewController.swift */,
-				E147513E2225942B00C068A9 /* DisplayFitSize.swift */,
-				E177BEF72209BB2800E2DE63 /* TrimImageVC.swift */,
-				E14FA200228D79E9005778D1 /* SettingViewController.swift */,
-				5759BC88233F50C80075BAB9 /* TutorialViewController.swift */,
-				57ECDA18234C7F5000B74682 /* TutorialViewController */,
-				E12F0421220EA16600FE88FB /* DataSave */,
-				E12F0420220EA13200FE88FB /* Parts */,
-				E12F041F220EA0DF00FE88FB /* Triming */,
+				AA002018000000000000018 /* RecToEfectApp.entitlements */,
+				AA002016000000000000016 /* RecToEfectAppApp.swift */,
+				AA003001000000000000001 /* Views */,
+				AA003002000000000000002 /* ViewModels */,
+				AA003003000000000000003 /* Models */,
+				AA003004000000000000004 /* Managers */,
 				E194CA7420C2FADF0043E5E3 /* Assets.xcassets */,
 				E194CA7620C2FADF0043E5E3 /* LaunchScreen.storyboard */,
-				E194CA7920C2FAE00043E5E3 /* Info.plist */,
+				E194CA7920C2FADF0043E5E3 /* Info.plist */,
 			);
 			path = RecToEfectApp;
 			sourceTree = "<group>";
@@ -211,22 +147,17 @@
 /* Begin PBXNativeTarget section */
 		E194CA6920C2FADC0043E5E3 /* RecToEfectApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E194CA7C20C2FAE00043E5E3 /* Build configuration list for PBXNativeTarget "RecToEfectApp" */;
+			buildConfigurationList = E194CA7C20C2FADF0043E5E3 /* Build configuration list for PBXNativeTarget "RecToEfectApp" */;
 			buildPhases = (
 				E194CA6620C2FADC0043E5E3 /* Sources */,
 				E194CA6720C2FADC0043E5E3 /* Frameworks */,
 				E194CA6820C2FADC0043E5E3 /* Resources */,
-				89E002BD268D998A00C4D96A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = RecToEfectApp;
-			packageProductDependencies = (
-				89784C97268DB02000B61577 /* Realm */,
-				89784C99268DB02000B61577 /* RealmSwift */,
-			);
 			productName = RecToEfectApp;
 			productReference = E194CA6A20C2FADC0043E5E3 /* RecToEfectApp.app */;
 			productType = "com.apple.product-type.application";
@@ -237,21 +168,13 @@
 		E194CA6220C2FADC0043E5E3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 1200;
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1640;
 				ORGANIZATIONNAME = "新村彰啓";
 				TargetAttributes = {
 					E194CA6920C2FADC0043E5E3 = {
-						CreatedOnToolsVersion = 9.3.1;
-						LastSwiftMigration = 1020;
-						SystemCapabilities = {
-							com.apple.BackgroundModes = {
-								enabled = 1;
-							};
-							com.apple.InterAppAudio = {
-								enabled = 1;
-							};
-						};
+						CreatedOnToolsVersion = 11.3;
 					};
 				};
 			};
@@ -262,12 +185,8 @@
 			knownRegions = (
 				en,
 				Base,
-				ja,
 			);
 			mainGroup = E194CA6120C2FADC0043E5E3;
-			packageReferences = (
-				89784C96268DB02000B61577 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
-			);
 			productRefGroup = E194CA6B20C2FADC0043E5E3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -284,8 +203,6 @@
 			files = (
 				E194CA7820C2FADF0043E5E3 /* LaunchScreen.storyboard in Resources */,
 				E194CA7520C2FADF0043E5E3 /* Assets.xcassets in Resources */,
-				E194CA7320C2FADC0043E5E3 /* Main.storyboard in Resources */,
-				E130BD7F220DC05000CF1B96 /* TrimImageVC.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,50 +213,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57ECDA1A234C7F8500B74682 /* SecondViewController.swift in Sources */,
-				E177BEF82209BB2800E2DE63 /* TrimImageVC.swift in Sources */,
-				5759BC89233F50C80075BAB9 /* TutorialViewController.swift in Sources */,
-				E130BD75220DB44B00CF1B96 /* UIViewController+Extension.swift in Sources */,
-				E1CD455720C2FDB7004CA01F /* KurukuruUI.swift in Sources */,
-				E1CD454F20C2FD92004CA01F /* AudioSave.swift in Sources */,
-				E130BD73220DA87E00CF1B96 /* CropScrollView.swift in Sources */,
-				E1CD455320C2FDA4004CA01F /* PlayButton.swift in Sources */,
-				E1CD455520C2FDAE004CA01F /* RecordButton.swift in Sources */,
-				E194CA7020C2FADC0043E5E3 /* MainViewController.swift in Sources */,
-				E1CD455120C2FD9A004CA01F /* DrawWaveform.swift in Sources */,
-				E130BD79220DB95D00CF1B96 /* UIColor+Extension.swift in Sources */,
-				E14AF1832296C9E40077F57A /* CustouTableView.swift in Sources */,
-				E147513F2225942B00C068A9 /* DisplayFitSize.swift in Sources */,
-				E130BD81220DC36A00CF1B96 /* CropOverlayView.swift in Sources */,
-				E14AF18122959DE00077F57A /* BackgroundImageView.swift in Sources */,
-				E1CED4BC221053AF00A12687 /* ImageSave.swift in Sources */,
-				E194CA6E20C2FADC0043E5E3 /* AppDelegate.swift in Sources */,
-				E14FA201228D79E9005778D1 /* SettingViewController.swift in Sources */,
-				8964786D247D3E9B007B3447 /* WaveformSave.swift in Sources */,
-				E130BD7B220DB98D00CF1B96 /* ExtentionCompatible.swift in Sources */,
-				E130BD77220DB89600CF1B96 /* NSObject+Extension.swift in Sources */,
-				57ECDA1C234C7FAB00B74682 /* ThirdViewController.swift in Sources */,
-				5738AFBE234C827F00D7143D /* FirstViewController.swift in Sources */,
+				AA001001000000000000001 /* MainView.swift in Sources */,
+				AA001002000000000000002 /* TutorialView.swift in Sources */,
+				AA001003000000000000003 /* SettingView.swift in Sources */,
+				AA001004000000000000004 /* TrimImageView.swift in Sources */,
+				AA001005000000000000005 /* AudioRecordListView.swift in Sources */,
+				AA001006000000000000006 /* RecordButtonView.swift in Sources */,
+				AA001007000000000000007 /* PlayButtonView.swift in Sources */,
+				AA001008000000000000008 /* VolumeIndicator.swift in Sources */,
+				AA001009000000000000009 /* WaveformView.swift in Sources */,
+				AA001010000000000000010 /* BackgroundImageView.swift in Sources */,
+				AA001011000000000000011 /* AudioRecorderViewModel.swift in Sources */,
+				AA001012000000000000012 /* AudioRecord.swift in Sources */,
+				AA001013000000000000013 /* WaveformRecord.swift in Sources */,
+				AA001014000000000000014 /* DataManager.swift in Sources */,
+				AA001016000000000000016 /* RecToEfectAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E194CA7120C2FADC0043E5E3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E194CA7220C2FADC0043E5E3 /* Base */,
-				E14751402227ED0B00C068A9 /* ja */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E194CA7620C2FADF0043E5E3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E194CA7720C2FADF0043E5E3 /* Base */,
-				E14751412227ED0B00C068A9 /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -347,11 +245,10 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		E194CA7A20C2FAE00043E5E3 /* Debug */ = {
+		E194CA7A20C2FADF0043E5E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -381,11 +278,12 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = YYBYKGJ7UV;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -400,8 +298,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -409,11 +308,10 @@
 			};
 			name = Debug;
 		};
-		E194CA7B20C2FAE00043E5E3 /* Release */ = {
+		E194CA7B20C2FADF0043E5E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -443,11 +341,12 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YYBYKGJ7UV;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -456,8 +355,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -465,48 +365,38 @@
 			};
 			name = Release;
 		};
-		E194CA7D20C2FAE00043E5E3 /* Debug */ = {
+		E194CA7D20C2FADF0043E5E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RecToEfectApp/RecToEfectApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.7;
-				DEVELOPMENT_TEAM = YYBYKGJ7UV;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = RecToEfectApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				NEW_SETTING = "";
-				PRODUCT_BUNDLE_IDENTIFIER = phononExtension.PickoutApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.akihironiimura.RecToEfectApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		E194CA7E20C2FAE00043E5E3 /* Release */ = {
+		E194CA7E20C2FADF0043E5E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RecToEfectApp/RecToEfectApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.7;
-				DEVELOPMENT_TEAM = YYBYKGJ7UV;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = RecToEfectApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				NEW_SETTING = "";
-				PRODUCT_BUNDLE_IDENTIFIER = phononExtension.PickoutApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.akihironiimura.RecToEfectApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -519,46 +409,22 @@
 		E194CA6520C2FADC0043E5E3 /* Build configuration list for PBXProject "RecToEfectApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E194CA7A20C2FAE00043E5E3 /* Debug */,
-				E194CA7B20C2FAE00043E5E3 /* Release */,
+				E194CA7A20C2FADF0043E5E3 /* Debug */,
+				E194CA7B20C2FADF0043E5E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E194CA7C20C2FAE00043E5E3 /* Build configuration list for PBXNativeTarget "RecToEfectApp" */ = {
+		E194CA7C20C2FADF0043E5E3 /* Build configuration list for PBXNativeTarget "RecToEfectApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E194CA7D20C2FAE00043E5E3 /* Debug */,
-				E194CA7E20C2FAE00043E5E3 /* Release */,
+				E194CA7D20C2FADF0043E5E3 /* Debug */,
+				E194CA7E20C2FADF0043E5E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		89784C96268DB02000B61577 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-cocoa.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.8.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		89784C97268DB02000B61577 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 89784C96268DB02000B61577 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = Realm;
-		};
-		89784C99268DB02000B61577 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 89784C96268DB02000B61577 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = RealmSwift;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E194CA6220C2FADC0043E5E3 /* Project object */;
 }
