@@ -152,11 +152,14 @@ struct AudioRecordRow: View {
 struct AudioRecordDetailView: View {
     let record: AudioRecord
     @Environment(\.dismiss) private var dismiss
+    @State private var showingTrimView = false
+    @StateObject private var audioRecorder = AudioRecorderViewModel()
     
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                VStack(alignment: .leading, spacing: 8) {
+                // Audio Info Section
+                VStack(alignment: .leading, spacing: 12) {
                     Text("録音詳細")
                         .font(.title2)
                         .bold()
@@ -165,11 +168,67 @@ struct AudioRecordDetailView: View {
                         Label("タイトル: \(record.audioTitle)", systemImage: "text.quote")
                         Label("作成日: \(record.createDate.formatted(.dateTime))", systemImage: "calendar")
                         Label("時間: \(formatDuration(record.duration))", systemImage: "clock")
-                        Label("ファイルパス: \(record.audioPath)", systemImage: "folder")
+                        Label("ファイルサイズ: \(getFileSize())", systemImage: "doc")
                     }
                     .font(.body)
+                    .foregroundColor(.secondary)
                 }
                 .padding()
+                .background(Color(UIColor.secondarySystemGroupedBackground))
+                .cornerRadius(12)
+                .padding(.horizontal)
+                
+                // Action Buttons Section
+                VStack(spacing: 15) {
+                    Button(action: {
+                        showingTrimView = true
+                    }) {
+                        HStack {
+                            Image(systemName: "scissors")
+                                .font(.title3)
+                            Text("音声を編集")
+                                .font(.headline)
+                        }
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(12)
+                    }
+                    
+                    Button(action: {
+                        shareAudio()
+                    }) {
+                        HStack {
+                            Image(systemName: "square.and.arrow.up")
+                                .font(.title3)
+                            Text("共有")
+                                .font(.headline)
+                        }
+                        .foregroundColor(.blue)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue.opacity(0.1))
+                        .cornerRadius(12)
+                    }
+                    
+                    Button(action: {
+                        playAudio()
+                    }) {
+                        HStack {
+                            Image(systemName: "play.circle")
+                                .font(.title3)
+                            Text("再生")
+                                .font(.headline)
+                        }
+                        .foregroundColor(.green)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green.opacity(0.1))
+                        .cornerRadius(12)
+                    }
+                }
+                .padding(.horizontal)
                 
                 Spacer()
             }
@@ -183,6 +242,30 @@ struct AudioRecordDetailView: View {
                 }
             }
         }
+        .sheet(isPresented: $showingTrimView) {
+            AudioTrimView(audioRecord: record, audioRecorder: audioRecorder)
+        }
+    }
+    
+    private func getFileSize() -> String {
+        guard let attributes = try? FileManager.default.attributesOfItem(atPath: record.audioPath),
+              let fileSize = attributes[.size] as? Int64 else {
+            return "不明"
+        }
+        
+        let formatter = ByteCountFormatter()
+        formatter.countStyle = .file
+        return formatter.string(fromByteCount: fileSize)
+    }
+    
+    private func shareAudio() {
+        // TODO: Implement sharing functionality
+        print("Sharing audio: \(record.audioTitle)")
+    }
+    
+    private func playAudio() {
+        // TODO: Implement audio playback
+        print("Playing audio: \(record.audioTitle)")
     }
     
     private func formatDuration(_ duration: TimeInterval) -> String {
