@@ -15,12 +15,9 @@ class AudioRecorderViewModel: ObservableObject {
     
     // MARK: - Audio Properties
     private var audioEngine: AVAudioEngine!
-    private var audioEngineMix: AVAudioEngine!
-    private var audioFile: AVAudioFile!
     private var audioFilePlayer: AVAudioPlayerNode!
-    private var outref: ExtAudioFileRef?
-    private var mixer: AVAudioMixerNode!
-    private var format: AVAudioFormat!
+    private var audioRecorder: AVAudioRecorder?
+    private var meterTimer: Timer?
     
     // MARK: - Audio Configuration
     private let sampleRate = 44100.0
@@ -51,9 +48,7 @@ class AudioRecorderViewModel: ObservableObject {
     // MARK: - Setup Methods
     private func setupAudio() {
         audioEngine = AVAudioEngine()
-        audioEngineMix = AVAudioEngine()
         audioFilePlayer = AVAudioPlayerNode()
-        mixer = AVAudioMixerNode()
         
         // Audio session setup
         do {
@@ -61,17 +56,7 @@ class AudioRecorderViewModel: ObservableObject {
             try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
             try audioSession.setActive(true)
             
-            // 入力ノードのフォーマットを取得
-            let inputNode = audioEngine.inputNode
-            let inputFormat = inputNode.inputFormat(forBus: 0)
-            
-            // 録音フォーマットを入力フォーマットに合わせる
-            format = AVAudioFormat(
-                commonFormat: inputFormat.commonFormat,
-                sampleRate: inputFormat.sampleRate,
-                channels: inputFormat.channelCount,
-                interleaved: inputFormat.isInterleaved
-            )
+
             
         } catch {
             print("Audio session setup error: \(error)")
@@ -94,29 +79,33 @@ class AudioRecorderViewModel: ObservableObject {
         
         do {
             let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let audioURL = documentsPath.appendingPathComponent("recording_\(Date().timeIntervalSince1970).caf")
+            let audioURL = documentsPath.appendingPathComponent("recording_\(Date().timeIntervalSince1970).m4a")
             filePath = audioURL.path
-            
-            audioFile = try AVAudioFile(forWriting: audioURL, settings: format.settings)
-            
+
+            let settings: [String: Any] = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 44100,
+                AVNumberOfChannelsKey: 1,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]
+
+            audioRecorder = try AVAudioRecorder(url: audioURL, settings: settings)
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.prepareToRecord()
+
             let inputNode = audioEngine.inputNode
-            inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, time in
-                try? self?.audioFile.write(from: buffer)
-                
-                // Volume level calculation
-                DispatchQueue.main.async {
-                    self?.updateVolumeLevel(from: buffer)
-                }
-            }
-            
-            audioEngine.prepare()
+            let format = inputNode.inputFormat(forBus: 0)
+            audioEngine.connect(inputNode, to: audioEngine.mainMixerNode, format: format)
+
             try audioEngine.start()
-            
+            audioRecorder?.record()
+            startMetering()
+
             DispatchQueue.main.async {
                 self.isRecording = true
                 self.descript = "録音中..."
             }
-            
+
         } catch {
             print("Recording start error: \(error)")
         }
@@ -125,12 +114,15 @@ class AudioRecorderViewModel: ObservableObject {
     func stopRecording() {
         guard isRecording else { return }
         
+        audioRecorder?.stop()
+        meterTimer?.invalidate()
         audioEngine.stop()
-        audioEngine.inputNode.removeTap(onBus: 0)
-        
+
+        duration = audioRecorder?.currentTime ?? 0
+
         // Save to SwiftData
         saveAudioToSwiftData()
-        
+
         DispatchQueue.main.async {
             self.isRecording = false
             self.descript = "録音完了"
@@ -143,14 +135,14 @@ class AudioRecorderViewModel: ObservableObject {
         
         do {
             let audioURL = URL(fileURLWithPath: path)
-            audioFile = try AVAudioFile(forReading: audioURL)
-            duration = Double(audioFile.length) / audioFile.fileFormat.sampleRate
-            
+            let file = try AVAudioFile(forReading: audioURL)
+            duration = Double(file.length) / file.fileFormat.sampleRate
+
             audioFilePlayer = AVAudioPlayerNode()
             audioEngine.attach(audioFilePlayer)
-            audioEngine.connect(audioFilePlayer, to: audioEngine.outputNode, format: audioFile.processingFormat)
-            
-            audioFilePlayer.scheduleFile(audioFile, at: nil) { [weak self] in
+            audioEngine.connect(audioFilePlayer, to: audioEngine.outputNode, format: file.processingFormat)
+
+            audioFilePlayer.scheduleFile(file, at: nil) { [weak self] in
                 DispatchQueue.main.async {
                     self?.stopPlayback()
                 }
@@ -183,18 +175,14 @@ class AudioRecorderViewModel: ObservableObject {
     }
     
     // MARK: - Helper Methods
-    private func updateVolumeLevel(from buffer: AVAudioPCMBuffer) {
-        guard let channelData = buffer.floatChannelData?[0] else { return }
-        
-        let frames = buffer.frameLength
-        var sum: Float = 0.0
-        
-        for i in 0..<Int(frames) {
-            sum += abs(channelData[i])
+    private func startMetering() {
+        meterTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
+            guard let self = self, let recorder = self.audioRecorder else { return }
+            recorder.updateMeters()
+            let power = recorder.averagePower(forChannel: 0)
+            let level = pow(10, power / 20)
+            self.volumeLevel = level
         }
-        
-        let averageAmplitude = sum / Float(frames)
-        volumeLevel = averageAmplitude
     }
     
     private func startPlaybackTimer() {
@@ -249,5 +237,6 @@ class AudioRecorderViewModel: ObservableObject {
     
     deinit {
         playbackTimer?.invalidate()
+        meterTimer?.invalidate()
     }
 }
