@@ -15,11 +15,12 @@ class AudioRecorderViewModel: ObservableObject {
     
     // MARK: - Audio Properties
     private var audioEngine: AVAudioEngine!
-    private var audioEngineMix: AVAudioEngine!
+    private var audioRecorder: AVAudioRecorder?
     private var audioFile: AVAudioFile!
     private var audioFilePlayer: AVAudioPlayerNode!
-    private var outref: ExtAudioFileRef?
     private var mixer: AVAudioMixerNode!
+    private var reverbNode: AVAudioUnitReverb!
+    private var delayNode: AVAudioUnitDelay!
     private var format: AVAudioFormat!
     
     // MARK: - Audio Configuration
@@ -28,6 +29,12 @@ class AudioRecorderViewModel: ObservableObject {
     private var offset: Double = 0.0
     private var filePath: String?
     private var waveFormPath: String?
+    
+    // MARK: - Effect Properties
+    @Published var reverbEnabled: Bool = false
+    @Published var delayEnabled: Bool = false
+    @Published var reverbWetness: Float = 0.5
+    @Published var delayTime: TimeInterval = 0.3
     
     
     // MARK: - SwiftData Properties
@@ -51,27 +58,30 @@ class AudioRecorderViewModel: ObservableObject {
     // MARK: - Setup Methods
     private func setupAudio() {
         audioEngine = AVAudioEngine()
-        audioEngineMix = AVAudioEngine()
         audioFilePlayer = AVAudioPlayerNode()
         mixer = AVAudioMixerNode()
+        reverbNode = AVAudioUnitReverb()
+        delayNode = AVAudioUnitDelay()
         
         // Audio session setup
         do {
             let audioSession = AVAudioSession.sharedInstance()
-            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
             try audioSession.setActive(true)
             
             // 入力ノードのフォーマットを取得
             let inputNode = audioEngine.inputNode
-            let inputFormat = inputNode.inputFormat(forBus: 0)
+            _ = inputNode.inputFormat(forBus: 0)
             
-            // 録音フォーマットを入力フォーマットに合わせる
+            // 録音フォーマットを設定（44.1kHz, 16bit, mono）
             format = AVAudioFormat(
-                commonFormat: inputFormat.commonFormat,
-                sampleRate: inputFormat.sampleRate,
-                channels: inputFormat.channelCount,
-                interleaved: inputFormat.isInterleaved
+                commonFormat: .pcmFormatInt16,
+                sampleRate: 44100,
+                channels: 1,
+                interleaved: false
             )
+            
+            setupRealTimeAudioProcessing()
             
         } catch {
             print("Audio session setup error: \(error)")
@@ -88,29 +98,67 @@ class AudioRecorderViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Real-time Audio Processing Setup
+    private func setupRealTimeAudioProcessing() {
+        let inputNode = audioEngine.inputNode
+        let inputFormat = inputNode.outputFormat(forBus: 0)
+        
+        // エフェクトノードをエンジンにアタッチ
+        audioEngine.attach(reverbNode)
+        audioEngine.attach(delayNode)
+        audioEngine.attach(mixer)
+        
+        // エフェクト設定
+        reverbNode.loadFactoryPreset(.mediumHall)
+        reverbNode.wetDryMix = 0 // 初期は無効
+        
+        delayNode.delayTime = 0.3
+        delayNode.feedback = 25
+        delayNode.wetDryMix = 0 // 初期は無効
+        
+        // オーディオグラフ接続
+        audioEngine.connect(inputNode, to: delayNode, format: inputFormat)
+        audioEngine.connect(delayNode, to: reverbNode, format: inputFormat)
+        audioEngine.connect(reverbNode, to: mixer, format: inputFormat)
+        audioEngine.connect(mixer, to: audioEngine.outputNode, format: inputFormat)
+        
+        // ボリュームモニタリング用のタップを設定
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: inputFormat) { [weak self] buffer, time in
+            DispatchQueue.main.async {
+                self?.updateVolumeLevel(from: buffer)
+            }
+        }
+    }
+    
     // MARK: - Recording Methods
     func startRecording() {
         guard !isRecording else { return }
         
         do {
             let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let audioURL = documentsPath.appendingPathComponent("recording_\(Date().timeIntervalSince1970).caf")
+            let audioURL = documentsPath.appendingPathComponent("recording_\(Date().timeIntervalSince1970).m4a")
             filePath = audioURL.path
             
-            audioFile = try AVAudioFile(forWriting: audioURL, settings: format.settings)
+            // AVAudioRecorderの設定
+            let settings: [String: Any] = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 44100,
+                AVNumberOfChannelsKey: 1,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]
             
-            let inputNode = audioEngine.inputNode
-            inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, time in
-                try? self?.audioFile.write(from: buffer)
-                
-                // Volume level calculation
-                DispatchQueue.main.async {
-                    self?.updateVolumeLevel(from: buffer)
-                }
+            audioRecorder = try AVAudioRecorder(url: audioURL, settings: settings)
+            audioRecorder?.isMeteringEnabled = true
+            audioRecorder?.prepareToRecord()
+            
+            // リアルタイム処理開始
+            if !audioEngine.isRunning {
+                audioEngine.prepare()
+                try audioEngine.start()
             }
             
-            audioEngine.prepare()
-            try audioEngine.start()
+            // 録音開始
+            audioRecorder?.record()
             
             DispatchQueue.main.async {
                 self.isRecording = true
@@ -125,8 +173,10 @@ class AudioRecorderViewModel: ObservableObject {
     func stopRecording() {
         guard isRecording else { return }
         
-        audioEngine.stop()
-        audioEngine.inputNode.removeTap(onBus: 0)
+        // 録音停止
+        audioRecorder?.stop()
+        
+        // リアルタイム処理は継続（ユーザーがエフェクトを聞き続けられるように）
         
         // Save to SwiftData
         saveAudioToSwiftData()
@@ -215,6 +265,12 @@ class AudioRecorderViewModel: ObservableObject {
         guard let path = filePath else { return }
         
         Task { @MainActor in
+            // 録音ファイルの長さを取得
+            let audioURL = URL(fileURLWithPath: path)
+            let asset = AVURLAsset(url: audioURL)
+            let durationCMTime = try await asset.load(.duration)
+            let duration = CMTimeGetSeconds(durationCMTime)
+            
             let audioRecord = AudioRecord(
                 audioTitle: "Recording \(Date().formatted(.dateTime.hour().minute()))",
                 audioPath: path,
@@ -247,7 +303,50 @@ class AudioRecorderViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Effect Control Methods
+    func toggleReverb() {
+        reverbEnabled.toggle()
+        reverbNode.wetDryMix = reverbEnabled ? reverbWetness * 100 : 0
+    }
+    
+    func toggleDelay() {
+        delayEnabled.toggle()
+        delayNode.wetDryMix = delayEnabled ? 50 : 0
+    }
+    
+    func setReverbWetness(_ value: Float) {
+        reverbWetness = value
+        if reverbEnabled {
+            reverbNode.wetDryMix = value * 100
+        }
+    }
+    
+    func setDelayTime(_ value: TimeInterval) {
+        delayTime = value
+        delayNode.delayTime = value
+    }
+    
+    func stopRealTimeProcessing() {
+        if audioEngine.isRunning {
+            audioEngine.stop()
+        }
+    }
+    
+    func startRealTimeProcessing() {
+        if !audioEngine.isRunning {
+            do {
+                audioEngine.prepare()
+                try audioEngine.start()
+            } catch {
+                print("Failed to start real-time processing: \(error)")
+            }
+        }
+    }
+    
     deinit {
         playbackTimer?.invalidate()
+        if audioEngine.isRunning {
+            audioEngine.stop()
+        }
     }
 }

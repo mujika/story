@@ -21,6 +21,10 @@ struct MainView: View {
                     .opacity(audioRecorder.isRecording ? 1.0 : 0.0)
                     .animation(.easeInOut, value: audioRecorder.isRecording)
                 
+                // Effect Controls
+                EffectControlView(audioRecorder: audioRecorder)
+                    .padding(.horizontal)
+                
                 // Waveform View (placeholder for now)
                 WaveformView()
                     .frame(height: 100)
