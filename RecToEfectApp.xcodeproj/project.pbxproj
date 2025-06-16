@@ -19,7 +19,8 @@
 		AA001010000000000000010 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002010000000000000010 /* BackgroundImageView.swift */; };
 		AA001015000000000000015 /* EffectControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002015000000000000015 /* EffectControlView.swift */; };
 		AA001017000000000000017 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002017000000000000017 /* SpinnerView.swift */; };
-		AA001018000000000000018 /* AudioTrimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002018000000000000018 /* AudioTrimView.swift */; };
+		AA001019000000000000019 /* AudioTrimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002019000000000000019 /* AudioTrimView.swift */; };
+		AA001020000000000000020 /* AudioEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002020000000000000020 /* AudioEditView.swift */; };
 		AA001011000000000000011 /* AudioRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002011000000000000011 /* AudioRecorderViewModel.swift */; };
 		AA001012000000000000012 /* AudioRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002012000000000000012 /* AudioRecord.swift */; };
 		AA001013000000000000013 /* WaveformRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002013000000000000013 /* WaveformRecord.swift */; };
@@ -42,7 +43,8 @@
 		AA002010000000000000010 /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 		AA002015000000000000015 /* EffectControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectControlView.swift; sourceTree = "<group>"; };
 		AA002017000000000000017 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
-		AA002018000000000000018 /* AudioTrimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrimView.swift; sourceTree = "<group>"; };
+		AA002019000000000000019 /* AudioTrimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrimView.swift; sourceTree = "<group>"; };
+		AA002020000000000000020 /* AudioEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEditView.swift; sourceTree = "<group>"; };
 		AA002011000000000000011 /* AudioRecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderViewModel.swift; sourceTree = "<group>"; };
 		AA002012000000000000012 /* AudioRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecord.swift; sourceTree = "<group>"; };
 		AA002013000000000000013 /* WaveformRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformRecord.swift; sourceTree = "<group>"; };
@@ -74,7 +76,8 @@
 				AA002003000000000000003 /* SettingView.swift */,
 				AA002004000000000000004 /* TrimImageView.swift */,
 				AA002005000000000000005 /* AudioRecordListView.swift */,
-				AA002018000000000000018 /* AudioTrimView.swift */,
+				AA002019000000000000019 /* AudioTrimView.swift */,
+				AA002020000000000000020 /* AudioEditView.swift */,
 				AA003006000000000000006 /* Components */,
 			);
 			path = Views;
@@ -234,7 +237,8 @@
 				AA001010000000000000010 /* BackgroundImageView.swift in Sources */,
 				AA001015000000000000015 /* EffectControlView.swift in Sources */,
 				AA001017000000000000017 /* SpinnerView.swift in Sources */,
-				AA001018000000000000018 /* AudioTrimView.swift in Sources */,
+				AA001019000000000000019 /* AudioTrimView.swift in Sources */,
+				AA001020000000000000020 /* AudioEditView.swift in Sources */,
 				AA001011000000000000011 /* AudioRecorderViewModel.swift in Sources */,
 				AA001012000000000000012 /* AudioRecord.swift in Sources */,
 				AA001013000000000000013 /* WaveformRecord.swift in Sources */,

@@ -277,7 +277,7 @@ struct AudioRecordDetailView: View {
             })
         }
         .sheet(isPresented: $showingTrimView) {
-            AudioTrimView(audioRecord: record, audioRecorder: audioRecorder)
+            AudioEditView(audioRecord: record, audioRecorder: audioRecorder)
         }
     }
     
