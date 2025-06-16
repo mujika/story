@@ -15,11 +15,20 @@ struct MainView: View {
             VStack(spacing: 20) {
                 Spacer()
                 
-                // Volume Level Indicator
-                VolumeIndicator(level: audioRecorder.volumeLevel)
-                    .frame(width: 200, height: 20)
-                    .opacity(audioRecorder.isRecording ? 1.0 : 0.0)
-                    .animation(.easeInOut, value: audioRecorder.isRecording)
+                // Status Indicator Area
+                VStack(spacing: 10) {
+                    // Spinner Animation
+                    SpinnerView(
+                        isAnimating: audioRecorder.isRecording || audioRecorder.isPlaying,
+                        size: 80
+                    )
+                    
+                    // Volume Level Indicator
+                    VolumeIndicator(level: audioRecorder.volumeLevel)
+                        .frame(width: 200, height: 20)
+                        .opacity(audioRecorder.isRecording ? 1.0 : 0.0)
+                        .animation(.easeInOut, value: audioRecorder.isRecording)
+                }
                 
                 // Effect Controls
                 EffectControlView(audioRecorder: audioRecorder)
@@ -82,14 +91,32 @@ struct MainView: View {
                 
                 Spacer()
                 
-                // Description Label
-                Text(audioRecorder.descript)
-                    .font(.system(size: 17))
-                    .foregroundColor(Color(red: 0.965, green: 0.965, blue: 0.965))
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                    .frame(height: 29)
-                    .padding(.bottom, 20)
+                // Status Display
+                VStack(spacing: 8) {
+                    // Description Label
+                    Text(audioRecorder.descript)
+                        .font(.system(size: 17))
+                        .foregroundColor(Color(red: 0.965, green: 0.965, blue: 0.965))
+                        .lineLimit(2)
+                        .multilineTextAlignment(.center)
+                    
+                    // Activity Indicator
+                    if audioRecorder.isRecording || audioRecorder.isPlaying {
+                        HStack(spacing: 4) {
+                            Circle()
+                                .fill(audioRecorder.isRecording ? Color.red : Color.blue)
+                                .frame(width: 8, height: 8)
+                                .scaleEffect(audioRecorder.isRecording || audioRecorder.isPlaying ? 1.2 : 1.0)
+                                .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: audioRecorder.isRecording || audioRecorder.isPlaying)
+                            
+                            Text(audioRecorder.isRecording ? "録音中" : "再生中")
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                    }
+                }
+                .frame(height: 50)
+                .padding(.bottom, 20)
                 
                 // Bottom Navigation Bar
                 HStack(spacing: 20) {

@@ -18,6 +18,7 @@
 		AA001009000000000000009 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002009000000000000009 /* WaveformView.swift */; };
 		AA001010000000000000010 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002010000000000000010 /* BackgroundImageView.swift */; };
 		AA001015000000000000015 /* EffectControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002015000000000000015 /* EffectControlView.swift */; };
+		AA001017000000000000017 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002017000000000000017 /* SpinnerView.swift */; };
 		AA001011000000000000011 /* AudioRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002011000000000000011 /* AudioRecorderViewModel.swift */; };
 		AA001012000000000000012 /* AudioRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002012000000000000012 /* AudioRecord.swift */; };
 		AA001013000000000000013 /* WaveformRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002013000000000000013 /* WaveformRecord.swift */; };
@@ -39,6 +40,7 @@
 		AA002009000000000000009 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		AA002010000000000000010 /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 		AA002015000000000000015 /* EffectControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectControlView.swift; sourceTree = "<group>"; };
+		AA002017000000000000017 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		AA002011000000000000011 /* AudioRecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderViewModel.swift; sourceTree = "<group>"; };
 		AA002012000000000000012 /* AudioRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecord.swift; sourceTree = "<group>"; };
 		AA002013000000000000013 /* WaveformRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformRecord.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				AA002009000000000000009 /* WaveformView.swift */,
 				AA002010000000000000010 /* BackgroundImageView.swift */,
 				AA002015000000000000015 /* EffectControlView.swift */,
+				AA002017000000000000017 /* SpinnerView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				AA001009000000000000009 /* WaveformView.swift in Sources */,
 				AA001010000000000000010 /* BackgroundImageView.swift in Sources */,
 				AA001015000000000000015 /* EffectControlView.swift in Sources */,
+				AA001017000000000000017 /* SpinnerView.swift in Sources */,
 				AA001011000000000000011 /* AudioRecorderViewModel.swift in Sources */,
 				AA001012000000000000012 /* AudioRecord.swift in Sources */,
 				AA001013000000000000013 /* WaveformRecord.swift in Sources */,
