@@ -21,6 +21,12 @@
 		AA001017000000000000017 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002017000000000000017 /* SpinnerView.swift */; };
 		AA001019000000000000019 /* AudioTrimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002019000000000000019 /* AudioTrimView.swift */; };
 		AA001020000000000000020 /* AudioEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002020000000000000020 /* AudioEditView.swift */; };
+		AA001021000000000000021 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002021000000000000021 /* AppColors.swift */; };
+		AA001022000000000000022 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002022000000000000022 /* AppTypography.swift */; };
+		AA001023000000000000023 /* AppSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002023000000000000023 /* AppSpacing.swift */; };
+		AA001024000000000000024 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002024000000000000024 /* PrimaryButton.swift */; };
+		AA001025000000000000025 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002025000000000000025 /* CardView.swift */; };
+		AA001026000000000000026 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002026000000000000026 /* NavigationButton.swift */; };
 		AA001011000000000000011 /* AudioRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002011000000000000011 /* AudioRecorderViewModel.swift */; };
 		AA001012000000000000012 /* AudioRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002012000000000000012 /* AudioRecord.swift */; };
 		AA001013000000000000013 /* WaveformRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA002013000000000000013 /* WaveformRecord.swift */; };
@@ -45,6 +51,12 @@
 		AA002017000000000000017 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		AA002019000000000000019 /* AudioTrimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrimView.swift; sourceTree = "<group>"; };
 		AA002020000000000000020 /* AudioEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEditView.swift; sourceTree = "<group>"; };
+		AA002021000000000000021 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		AA002022000000000000022 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
+		AA002023000000000000023 /* AppSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSpacing.swift; sourceTree = "<group>"; };
+		AA002024000000000000024 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		AA002025000000000000025 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		AA002026000000000000026 /* NavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
 		AA002011000000000000011 /* AudioRecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderViewModel.swift; sourceTree = "<group>"; };
 		AA002012000000000000012 /* AudioRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecord.swift; sourceTree = "<group>"; };
 		AA002013000000000000013 /* WaveformRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformRecord.swift; sourceTree = "<group>"; };
@@ -118,8 +130,21 @@
 				AA002010000000000000010 /* BackgroundImageView.swift */,
 				AA002015000000000000015 /* EffectControlView.swift */,
 				AA002017000000000000017 /* SpinnerView.swift */,
+				AA002024000000000000024 /* PrimaryButton.swift */,
+				AA002025000000000000025 /* CardView.swift */,
+				AA002026000000000000026 /* NavigationButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		AA003007000000000000007 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				AA002021000000000000021 /* AppColors.swift */,
+				AA002022000000000000022 /* AppTypography.swift */,
+				AA002023000000000000023 /* AppSpacing.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		E194CA6120C2FADC0043E5E3 = {
@@ -147,6 +172,7 @@
 				AA003002000000000000002 /* ViewModels */,
 				AA003003000000000000003 /* Models */,
 				AA003004000000000000004 /* Managers */,
+				AA003007000000000000007 /* Styles */,
 				E194CA7420C2FADF0043E5E3 /* Assets.xcassets */,
 				E194CA7620C2FADF0043E5E3 /* LaunchScreen.storyboard */,
 				E194CA7920C2FADF0043E5E3 /* Info.plist */,
@@ -239,6 +265,12 @@
 				AA001017000000000000017 /* SpinnerView.swift in Sources */,
 				AA001019000000000000019 /* AudioTrimView.swift in Sources */,
 				AA001020000000000000020 /* AudioEditView.swift in Sources */,
+				AA001021000000000000021 /* AppColors.swift in Sources */,
+				AA001022000000000000022 /* AppTypography.swift in Sources */,
+				AA001023000000000000023 /* AppSpacing.swift in Sources */,
+				AA001024000000000000024 /* PrimaryButton.swift in Sources */,
+				AA001025000000000000025 /* CardView.swift in Sources */,
+				AA001026000000000000026 /* NavigationButton.swift in Sources */,
 				AA001011000000000000011 /* AudioRecorderViewModel.swift in Sources */,
 				AA001012000000000000012 /* AudioRecord.swift in Sources */,
 				AA001013000000000000013 /* WaveformRecord.swift in Sources */,

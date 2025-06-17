@@ -4,129 +4,172 @@ struct EffectControlView: View {
     @ObservedObject var audioRecorder: AudioRecorderViewModel
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: AppSpacing.md) {
             Text("エフェクト")
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding(.top)
+                .font(AppTypography.headlineMedium)
+                .foregroundColor(AppColors.onSurface)
+                .padding(.top, AppSpacing.sm)
             
-            VStack(spacing: 15) {
+            VStack(spacing: AppSpacing.md) {
                 // Reverb Control
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text("リバーブ")
-                            .font(.subheadline)
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        Toggle("", isOn: Binding(
-                            get: { audioRecorder.reverbEnabled },
-                            set: { _ in audioRecorder.toggleReverb() }
-                        ))
-                        .toggleStyle(SwitchToggleStyle(tint: .blue))
-                    }
-                    
+                EffectControlCard(
+                    title: "リバーブ",
+                    isEnabled: audioRecorder.reverbEnabled,
+                    toggleColor: AppColors.accent,
+                    onToggle: { audioRecorder.toggleReverb() }
+                ) {
                     if audioRecorder.reverbEnabled {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("深さ")
-                                .font(.caption)
-                                .foregroundColor(.white.opacity(0.8))
-                            
-                            Slider(
-                                value: Binding(
-                                    get: { audioRecorder.reverbWetness },
-                                    set: { audioRecorder.setReverbWetness($0) }
-                                ),
-                                in: 0...1,
-                                step: 0.1
-                            )
-                            .accentColor(.blue)
-                        }
+                        EffectSlider(
+                            title: "深さ",
+                            value: Binding(
+                                get: { audioRecorder.reverbWetness },
+                                set: { audioRecorder.setReverbWetness($0) }
+                            ),
+                            range: 0...1,
+                            step: 0.1,
+                            color: AppColors.accent
+                        )
                     }
                 }
-                .padding()
-                .background(Color.white.opacity(0.1))
-                .cornerRadius(12)
                 
                 // Delay Control
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text("ディレイ")
-                            .font(.subheadline)
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        Toggle("", isOn: Binding(
-                            get: { audioRecorder.delayEnabled },
-                            set: { _ in audioRecorder.toggleDelay() }
-                        ))
-                        .toggleStyle(SwitchToggleStyle(tint: .green))
-                    }
-                    
+                EffectControlCard(
+                    title: "ディレイ",
+                    isEnabled: audioRecorder.delayEnabled,
+                    toggleColor: AppColors.secondary,
+                    onToggle: { audioRecorder.toggleDelay() }
+                ) {
                     if audioRecorder.delayEnabled {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("遅延時間")
-                                .font(.caption)
-                                .foregroundColor(.white.opacity(0.8))
-                            
-                            Slider(
-                                value: Binding(
-                                    get: { audioRecorder.delayTime },
-                                    set: { audioRecorder.setDelayTime($0) }
-                                ),
-                                in: 0.1...1.0,
-                                step: 0.1
-                            )
-                            .accentColor(.green)
-                            
-                            Text("\(audioRecorder.delayTime, specifier: "%.1f")秒")
-                                .font(.caption2)
-                                .foregroundColor(.white.opacity(0.6))
-                        }
+                        EffectSlider(
+                            title: "遅延時間",
+                            value: Binding(
+                                get: { audioRecorder.delayTime },
+                                set: { audioRecorder.setDelayTime($0) }
+                            ),
+                            range: 0.1...1.0,
+                            step: 0.1,
+                            color: AppColors.secondary,
+                            unit: "秒"
+                        )
                     }
                 }
-                .padding()
-                .background(Color.white.opacity(0.1))
-                .cornerRadius(12)
             }
             
             // Real-time Processing Control
-            HStack(spacing: 20) {
-                Button(action: {
+            HStack(spacing: AppSpacing.md) {
+                SecondaryButton(
+                    "処理開始",
+                    size: .small
+                ) {
                     audioRecorder.startRealTimeProcessing()
-                }) {
-                    Text("リアルタイム処理開始")
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Color.blue.opacity(0.6))
-                        .cornerRadius(8)
                 }
                 
-                Button(action: {
+                SecondaryButton(
+                    "処理停止",
+                    size: .small
+                ) {
                     audioRecorder.stopRealTimeProcessing()
-                }) {
-                    Text("処理停止")
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Color.red.opacity(0.6))
-                        .cornerRadius(8)
                 }
             }
-            .padding(.bottom)
+            .padding(.bottom, AppSpacing.sm)
         }
-        .padding()
-        .background(Color.black.opacity(0.3))
-        .cornerRadius(20)
+    }
+}
+
+// MARK: - Supporting Components
+struct EffectControlCard<Content: View>: View {
+    let title: String
+    let isEnabled: Bool
+    let toggleColor: Color
+    let onToggle: () -> Void
+    let content: Content
+    
+    init(
+        title: String,
+        isEnabled: Bool,
+        toggleColor: Color,
+        onToggle: @escaping () -> Void,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.title = title
+        self.isEnabled = isEnabled
+        self.toggleColor = toggleColor
+        self.onToggle = onToggle
+        self.content = content()
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.sm) {
+            HStack {
+                Text(title)
+                    .font(AppTypography.bodyMedium)
+                    .foregroundColor(AppColors.onSurface)
+                
+                Spacer()
+                
+                Toggle("", isOn: .constant(isEnabled))
+                    .toggleStyle(SwitchToggleStyle(tint: toggleColor))
+                    .onTapGesture { onToggle() }
+            }
+            
+            content
+        }
+        .padding(AppSpacing.md)
+        .background(AppColors.surface)
+        .cornerRadius(AppSpacing.cornerRadius)
+    }
+}
+
+struct EffectSlider: View {
+    let title: String
+    @Binding var value: Double
+    let range: ClosedRange<Double>
+    let step: Double
+    let color: Color
+    let unit: String
+    
+    init(
+        title: String,
+        value: Binding<Double>,
+        range: ClosedRange<Double>,
+        step: Double,
+        color: Color,
+        unit: String = ""
+    ) {
+        self.title = title
+        self._value = value
+        self.range = range
+        self.step = step
+        self.color = color
+        self.unit = unit
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+            HStack {
+                Text(title)
+                    .font(AppTypography.caption)
+                    .foregroundColor(AppColors.onSurfaceSecondary)
+                
+                Spacer()
+                
+                if !unit.isEmpty {
+                    Text("\(value, specifier: "%.1f")\(unit)")
+                        .font(AppTypography.caption)
+                        .foregroundColor(AppColors.onSurfaceTertiary)
+                }
+            }
+            
+            Slider(value: $value, in: range, step: step)
+                .accentColor(color)
+        }
     }
 }
 
 #Preview {
-    EffectControlView(audioRecorder: AudioRecorderViewModel())
-        .background(Color.black)
+    VStack(spacing: AppSpacing.lg) {
+        EffectControlView(audioRecorder: AudioRecorderViewModel())
+    }
+    .padding()
+    .background(AppColors.warmGradient)
 }

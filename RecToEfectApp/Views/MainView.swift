@@ -8,19 +8,19 @@ struct MainView: View {
     
     var body: some View {
         ZStack {
-            // Background Image
-            BackgroundImageView()
+            // Background with unified gradient
+            AppColors.warmGradient
                 .ignoresSafeArea()
             
-            VStack(spacing: 20) {
+            VStack(spacing: AppSpacing.sectionSpacing) {
                 Spacer()
                 
                 // Status Indicator Area
-                VStack(spacing: 10) {
+                VStack(spacing: AppSpacing.md) {
                     // Spinner Animation
                     SpinnerView(
                         isAnimating: audioRecorder.isRecording || audioRecorder.isPlaying,
-                        size: 80
+                        size: AppSpacing.recordButtonSize
                     )
                     
                     // Volume Level Indicator
@@ -30,157 +30,128 @@ struct MainView: View {
                         .animation(.easeInOut, value: audioRecorder.isRecording)
                 }
                 
-                // Effect Controls
-                EffectControlView(audioRecorder: audioRecorder)
-                    .padding(.horizontal)
+                // Effect Controls Card
+                CardView(style: .glassMorphism) {
+                    EffectControlView(audioRecorder: audioRecorder)
+                }
+                .padding(.horizontal, AppSpacing.screenPadding)
                 
-                // Waveform View
-                WaveformView(
-                    waveformData: audioRecorder.isRecording ? audioRecorder.waveformData : audioRecorder.playbackWaveformData,
-                    isRecording: audioRecorder.isRecording,
-                    isPlaying: audioRecorder.isPlaying
-                )
-                .frame(height: 100)
-                .padding(.horizontal)
+                // Waveform Card
+                AudioCard(isActive: audioRecorder.isRecording || audioRecorder.isPlaying) {
+                    WaveformView(
+                        waveformData: audioRecorder.isRecording ? audioRecorder.waveformData : audioRecorder.playbackWaveformData,
+                        isRecording: audioRecorder.isRecording,
+                        isPlaying: audioRecorder.isPlaying
+                    )
+                    .frame(height: AppSpacing.waveformHeight)
+                }
+                .padding(.horizontal, AppSpacing.screenPadding)
                 
                 // Control Buttons
-                HStack(spacing: 40) {
+                HStack(spacing: AppSpacing.xl) {
                     // Record Button
-                    RecordButtonView(
-                        isRecording: audioRecorder.isRecording,
-                        action: {
-                            if audioRecorder.isRecording {
-                                audioRecorder.stopRecording()
-                            } else {
-                                audioRecorder.startRecording()
-                            }
+                    CircularButton(
+                        systemImage: audioRecorder.isRecording ? "stop.fill" : "record.circle",
+                        size: .large,
+                        isActive: audioRecorder.isRecording
+                    ) {
+                        if audioRecorder.isRecording {
+                            audioRecorder.stopRecording()
+                        } else {
+                            audioRecorder.startRecording()
                         }
-                    )
+                    }
                     
                     // Play Button
-                    PlayButtonView(
-                        isPlaying: audioRecorder.isPlaying,
-                        action: {
-                            if audioRecorder.isPlaying {
-                                audioRecorder.stopPlayback()
-                            } else {
-                                audioRecorder.startPlayback()
-                            }
+                    CircularButton(
+                        systemImage: audioRecorder.isPlaying ? "stop.fill" : "play.fill",
+                        size: .large,
+                        isActive: audioRecorder.isPlaying
+                    ) {
+                        if audioRecorder.isPlaying {
+                            audioRecorder.stopPlayback()
+                        } else {
+                            audioRecorder.startPlayback()
                         }
-                    )
+                    }
                     .disabled(audioRecorder.isRecording)
+                    .opacity(audioRecorder.isRecording ? 0.5 : 1.0)
                 }
                 
                 // Playback Progress
                 if audioRecorder.duration > 0 {
-                    VStack {
-                        ProgressView(value: audioRecorder.currentTime, total: audioRecorder.duration)
-                            .progressViewStyle(LinearProgressViewStyle())
-                            .padding(.horizontal)
-                        
-                        HStack {
-                            Text(formatTime(audioRecorder.currentTime))
-                            Spacer()
-                            Text(formatTime(audioRecorder.duration))
+                    GlassMorphismCard {
+                        VStack(spacing: AppSpacing.sm) {
+                            ProgressView(value: audioRecorder.currentTime, total: audioRecorder.duration)
+                                .progressViewStyle(LinearProgressViewStyle(tint: AppColors.secondary))
+                            
+                            HStack {
+                                Text(formatTime(audioRecorder.currentTime))
+                                    .font(AppTypography.timer)
+                                Spacer()
+                                Text(formatTime(audioRecorder.duration))
+                                    .font(AppTypography.timer)
+                            }
+                            .foregroundColor(AppColors.onSurface)
                         }
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal)
                     }
+                    .padding(.horizontal, AppSpacing.screenPadding)
                 }
                 
                 Spacer()
                 
                 // Status Display
-                VStack(spacing: 8) {
-                    // Description Label
+                VStack(spacing: AppSpacing.sm) {
                     Text(audioRecorder.descript)
-                        .font(.system(size: 17))
-                        .foregroundColor(Color(red: 0.965, green: 0.965, blue: 0.965))
+                        .font(AppTypography.headlineSmall)
+                        .foregroundColor(AppColors.onSurface)
                         .lineLimit(2)
                         .multilineTextAlignment(.center)
                     
                     // Activity Indicator
                     if audioRecorder.isRecording || audioRecorder.isPlaying {
-                        HStack(spacing: 4) {
+                        HStack(spacing: AppSpacing.xs) {
                             Circle()
-                                .fill(audioRecorder.isRecording ? Color.red : Color.blue)
+                                .fill(audioRecorder.isRecording ? AppColors.recordingActive : AppColors.playbackActive)
                                 .frame(width: 8, height: 8)
-                                .scaleEffect(audioRecorder.isRecording || audioRecorder.isPlaying ? 1.2 : 1.0)
+                                .scaleEffect(1.2)
                                 .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: audioRecorder.isRecording || audioRecorder.isPlaying)
                             
                             Text(audioRecorder.isRecording ? "録音中" : "再生中")
-                                .font(.caption)
-                                .foregroundColor(.white.opacity(0.8))
+                                .font(AppTypography.caption)
+                                .foregroundColor(AppColors.onSurfaceSecondary)
                         }
                     }
                 }
                 .frame(height: 50)
-                .padding(.bottom, 20)
+                .padding(.bottom, AppSpacing.lg)
                 
                 // Bottom Navigation Bar
-                HStack(spacing: 20) {
-                    // Tutorial Button
-                    Button(action: { showingTutorial = true }) {
-                        VStack(spacing: 8) {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.white.opacity(0.2))
-                                    .frame(width: 60, height: 60)
-                                
-                                Image(systemName: "questionmark.circle")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                            }
-                            
-                            Text("チュートリアル")
-                                .font(.caption)
-                                .foregroundColor(.white)
-                        }
+                HStack(spacing: AppSpacing.lg) {
+                    NavigationButton(
+                        icon: "questionmark.circle",
+                        title: "チュートリアル"
+                    ) {
+                        showingTutorial = true
                     }
                     
-                    // History Button
-                    Button(action: { showingRecordList = true }) {
-                        VStack(spacing: 8) {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.white.opacity(0.2))
-                                    .frame(width: 60, height: 60)
-                                
-                                Image(systemName: "list.bullet")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                            }
-                            
-                            Text("録音音源")
-                                .font(.caption)
-                                .foregroundColor(.white)
-                        }
+                    NavigationButton(
+                        icon: "list.bullet",
+                        title: "録音音源"
+                    ) {
+                        showingRecordList = true
                     }
                     
-                    // Settings Button
-                    Button(action: { showingSettings = true }) {
-                        VStack(spacing: 8) {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.white.opacity(0.2))
-                                    .frame(width: 60, height: 60)
-                                
-                                Image(systemName: "gearshape")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                            }
-                            
-                            Text("設定")
-                                .font(.caption)
-                                .foregroundColor(.white)
-                        }
+                    NavigationButton(
+                        icon: "gearshape",
+                        title: "設定"
+                    ) {
+                        showingSettings = true
                     }
                 }
-                .padding(.bottom, 40)
+                .padding(.bottom, AppSpacing.xl)
             }
         }
-        .background(Color.white)
         .sheet(isPresented: $showingSettings) {
             SettingView()
         }

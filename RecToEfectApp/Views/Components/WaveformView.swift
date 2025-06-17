@@ -54,11 +54,11 @@ struct WaveformView: View {
     
     private func barColor(for index: Int) -> Color {
         if isRecording {
-            return Color.red.opacity(0.8)
+            return AppColors.waveformRecording.opacity(0.8)
         } else if isPlaying {
-            return Color.blue.opacity(0.8)
+            return AppColors.waveformPlayback.opacity(0.8)
         } else {
-            return Color.white.opacity(0.7)
+            return AppColors.onSurface.opacity(0.7)
         }
     }
     
@@ -83,5 +83,5 @@ struct WaveformView: View {
     )
     .frame(height: 100)
     .padding()
-    .background(Color.black)
+    .background(AppColors.background)
 }

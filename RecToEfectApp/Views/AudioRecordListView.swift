@@ -31,30 +31,29 @@ struct AudioRecordListView: View {
                 .background(Color(UIColor.systemGroupedBackground))
                 .navigationTitle("録音履歴")
             } else {
-                List {
-                    ForEach(audioRecords) { record in
-                        AudioRecordRow(
-                            record: record,
-                            isPlaying: audioPlayer.isPlaying && audioPlayer.filePath == record.audioPath,
-                            onTap: {
-                                selectedRecord = record
-                            },
-                            onPlayTap: {
-                                if audioPlayer.isPlaying && audioPlayer.filePath == record.audioPath {
-                                    audioPlayer.stopPlayback()
-                                } else {
-                                    audioPlayer.playAudioFile(path: record.audioPath)
-                                    audioPlayer.filePath = record.audioPath
+                ScrollView {
+                    LazyVStack(spacing: AppSpacing.md) {
+                        ForEach(audioRecords) { record in
+                            AudioRecordCardRow(
+                                record: record,
+                                isPlaying: audioPlayer.isPlaying && audioPlayer.filePath == record.audioPath,
+                                onTap: {
+                                    selectedRecord = record
+                                },
+                                onPlayTap: {
+                                    if audioPlayer.isPlaying && audioPlayer.filePath == record.audioPath {
+                                        audioPlayer.stopPlayback()
+                                    } else {
+                                        audioPlayer.playAudioFile(path: record.audioPath)
+                                        audioPlayer.filePath = record.audioPath
+                                    }
                                 }
-                            }
-                        )
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
+                            )
+                        }
                     }
-                    .onDelete(perform: deleteRecords)
+                    .padding(AppSpacing.screenPadding)
                 }
-                .listStyle(PlainListStyle())
-                .background(Color(UIColor.systemGroupedBackground))
+                .background(AppColors.warmGradient)
                 .navigationTitle("録音履歴 (\(audioRecords.count)件)")
                 .toolbar(content: {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -84,96 +83,83 @@ struct AudioRecordListView: View {
     }
 }
 
-struct AudioRecordRow: View {
+struct AudioRecordCardRow: View {
     let record: AudioRecord
     let isPlaying: Bool
     let onTap: () -> Void
     let onPlayTap: () -> Void
     
     var body: some View {
-        HStack(spacing: 12) {
-            // Icon area
-            ZStack {
-                Circle()
-                    .fill(isPlaying ? Color.green.opacity(0.2) : Color.blue.opacity(0.1))
-                    .frame(width: 50, height: 50)
-                
-                Image(systemName: isPlaying ? "waveform" : "waveform")
-                    .font(.title3)
-                    .foregroundColor(isPlaying ? .green : .blue)
-                    .scaleEffect(isPlaying ? 1.1 : 1.0)
-                    .animation(.easeInOut(duration: 0.3), value: isPlaying)
-            }
-            
-            // Content area - tappable to open details
-            Button(action: onTap) {
-                VStack(alignment: .leading, spacing: 6) {
-                    // Title
-                    Text(record.audioTitle.isEmpty ? "無題の録音" : record.audioTitle)
-                        .font(.headline)
-                        .lineLimit(1)
-                        .foregroundColor(.primary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+        AudioCard(isActive: isPlaying) {
+            HStack(spacing: AppSpacing.md) {
+                // Waveform Icon
+                ZStack {
+                    Circle()
+                        .fill(isPlaying ? AppColors.playbackActive.opacity(0.2) : AppColors.surface)
+                        .frame(width: 50, height: 50)
                     
-                    // Date and duration in a single line
-                    HStack(spacing: 8) {
-                        Label(record.createDate.formatted(.dateTime.day().month().hour().minute()), 
-                              systemImage: "clock")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                    Image(systemName: "waveform")
+                        .font(.system(size: 20, weight: .medium))
+                        .foregroundColor(isPlaying ? AppColors.playbackActive : AppColors.onSurfaceSecondary)
+                        .scaleEffect(isPlaying ? 1.1 : 1.0)
+                        .animation(.easeInOut(duration: 0.3), value: isPlaying)
+                }
+                
+                // Content area
+                Button(action: onTap) {
+                    VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                        Text(record.audioTitle.isEmpty ? "無題の録音" : record.audioTitle)
+                            .font(AppTypography.headlineSmall)
+                            .lineLimit(1)
+                            .foregroundColor(AppColors.onSurface)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        if record.duration > 0 {
-                            Divider()
-                                .frame(height: 12)
+                        HStack(spacing: AppSpacing.sm) {
+                            Label(
+                                record.createDate.formatted(.dateTime.day().month().hour().minute()),
+                                systemImage: "clock"
+                            )
+                            .font(AppTypography.caption)
+                            .foregroundColor(AppColors.onSurfaceSecondary)
                             
-                            Label(formatDuration(record.duration), 
-                                  systemImage: "timer")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                        
-                        Spacer()
-                        
-                        if isPlaying {
-                            HStack(spacing: 4) {
-                                Image(systemName: "speaker.wave.2")
-                                    .font(.caption)
-                                    .foregroundColor(.green)
-                                Text("再生中")
-                                    .font(.caption)
-                                    .foregroundColor(.green)
+                            if record.duration > 0 {
+                                Divider()
+                                    .frame(height: 12)
+                                
+                                Label(
+                                    formatDuration(record.duration),
+                                    systemImage: "timer"
+                                )
+                                .font(AppTypography.duration)
+                                .foregroundColor(AppColors.onSurfaceSecondary)
+                            }
+                            
+                            Spacer()
+                            
+                            if isPlaying {
+                                HStack(spacing: AppSpacing.xs) {
+                                    Image(systemName: "speaker.wave.2")
+                                        .font(.caption)
+                                        .foregroundColor(AppColors.playbackActive)
+                                    Text("再生中")
+                                        .font(AppTypography.caption)
+                                        .foregroundColor(AppColors.playbackActive)
+                                }
                             }
                         }
                     }
                 }
-            }
-            .buttonStyle(PlainButtonStyle())
-            
-            // Play/Stop button
-            Button(action: onPlayTap) {
-                ZStack {
-                    Circle()
-                        .fill(isPlaying ? Color.red : Color.blue)
-                        .frame(width: 44, height: 44)
-                    
-                    Image(systemName: isPlaying ? "stop.fill" : "play.fill")
-                        .font(.title3)
-                        .foregroundColor(.white)
-                }
-            }
-            .buttonStyle(PlainButtonStyle())
-        }
-        .padding(.vertical, 8)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(UIColor.systemBackground))
-                .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isPlaying ? Color.green.opacity(0.3) : Color.clear, lineWidth: 2)
+                .buttonStyle(PlainButtonStyle())
+                
+                // Play/Stop button
+                CircularButton(
+                    systemImage: isPlaying ? "stop.fill" : "play.fill",
+                    size: .medium,
+                    isActive: isPlaying,
+                    action: onPlayTap
                 )
-        )
-        .padding(.horizontal, 4)
+            }
+        }
     }
     
     private func formatDuration(_ duration: TimeInterval) -> String {
