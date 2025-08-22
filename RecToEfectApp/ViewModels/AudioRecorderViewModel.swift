@@ -15,11 +15,9 @@ class AudioRecorderViewModel: ObservableObject {
     
     // MARK: - Audio Properties
     private var audioEngine: AVAudioEngine!
-    private var audioEngineMix: AVAudioEngine!
     private var audioFile: AVAudioFile!
     private var audioFilePlayer: AVAudioPlayerNode!
-    private var outref: ExtAudioFileRef?
-    private var mixer: AVAudioMixerNode!
+    private var audioRecorder: AVAudioRecorder?
     private var format: AVAudioFormat!
     
     // MARK: - Audio Configuration
@@ -51,9 +49,7 @@ class AudioRecorderViewModel: ObservableObject {
     // MARK: - Setup Methods
     private func setupAudio() {
         audioEngine = AVAudioEngine()
-        audioEngineMix = AVAudioEngine()
         audioFilePlayer = AVAudioPlayerNode()
-        mixer = AVAudioMixerNode()
         
         // Audio session setup
         do {
@@ -96,22 +92,22 @@ class AudioRecorderViewModel: ObservableObject {
             let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let audioURL = documentsPath.appendingPathComponent("recording_\(Date().timeIntervalSince1970).caf")
             filePath = audioURL.path
-            
-            audioFile = try AVAudioFile(forWriting: audioURL, settings: format.settings)
-            
+
+            audioRecorder = try AVAudioRecorder(url: audioURL, settings: format.settings)
+            audioRecorder?.isMeteringEnabled = true
+
             let inputNode = audioEngine.inputNode
-            inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, time in
-                try? self?.audioFile.write(from: buffer)
-                
-                // Volume level calculation
+            audioEngine.connect(inputNode, to: audioEngine.mainMixerNode, format: format)
+            inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, _ in
                 DispatchQueue.main.async {
                     self?.updateVolumeLevel(from: buffer)
                 }
             }
-            
+
             audioEngine.prepare()
             try audioEngine.start()
-            
+            audioRecorder?.record()
+
             DispatchQueue.main.async {
                 self.isRecording = true
                 self.descript = "録音中..."
@@ -124,13 +120,16 @@ class AudioRecorderViewModel: ObservableObject {
     
     func stopRecording() {
         guard isRecording else { return }
-        
+
+        audioRecorder?.stop()
+        duration = audioRecorder?.currentTime ?? 0
+
         audioEngine.stop()
         audioEngine.inputNode.removeTap(onBus: 0)
-        
+
         // Save to SwiftData
         saveAudioToSwiftData()
-        
+
         DispatchQueue.main.async {
             self.isRecording = false
             self.descript = "録音完了"
